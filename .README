@@ -1,0 +1,14 @@
+################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+
+NOMBRE: BRYAN HAROL CONDORI RAFAEL
+CARRERA: ING. SISTEMAS
+PARALELO: 'A'
+
+El objetivo del proyecto es desarrollar un sistema que permita 
+gestionar y consultar la informacion relaciona con los autos, 
+este proyecto busca facilitar  la busqueda y filtrado de los autos
+segun las necesidades, como ser marca modelo y precio. Ademas de
+tener funcionalidades como la de agregar nuevos autos, actualizar
+los datos ya existentes y eliminar en la base de datos de mongo
+En resumen  el objetovo es crear una plataforma util para la 
+gestion de informacion de los autos
