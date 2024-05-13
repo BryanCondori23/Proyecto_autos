@@ -110,4 +110,56 @@ rutas.get('/autoPorCantidad/:cantidad', async (req, res) => {
     }
 });
 
+/// CONSULTAS MONGO PARA EL EXAMEN
+
+//busqueda de autos por letra
+rutas.get('/buscarAutosPorLetra/:letra', async (req, res) => {
+    try {
+        const autosPorLetra = await AutoModel.find({ marca: { $regex: `^${req.params.letra}`, $options: 'i' } });
+        return res.json(autosPorLetra);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// buscar autos con precio mayor al indicado en la solicitud get
+rutas.get('/autosPrecioMayor/:precio', async (req, res) => {
+    try {
+        const autosPrecioMayor = await AutoModel.find({ precio: { $gt: req.params.precio } });
+        return res.json(autosPrecioMayor);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// mostrar autos por modelo 
+rutas.get('/modelosPorMarca/:marca', async (req, res) => {
+    try {
+        const modelosPorMarca = await AutoModel.distinct('modelo', { marca: req.params.marca });
+        return res.json(modelosPorMarca);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+
+// listar los autos dentro de un rango de precio
+
+rutas.get('/autosPorRangoPrecio/:precioMin/:precioMax', async (req, res) => {
+    try {
+        const autosPorRangoPrecio = await AutoModel.find({ precio: { $gte: req.params.precioMin, $lte: req.params.precioMax } });
+        return res.json(autosPorRangoPrecio);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// ordenar los autos pero por precio
+rutas.get('/autosOrdenadosPorPrecio', async (req, res) => {
+    try {
+       const autosOrdenadosPorPrecio = await AutoModel.find().sort({ precio: -1 });
+       res.status(200).json(autosOrdenadosPorPrecio);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+
+
+
 module.exports = rutas;
