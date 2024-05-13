@@ -51,7 +51,7 @@ rutas.delete('/eliminar/:id',async (req, res) => {
         res.status(500).json({ mensaje :  error.message})
     }
 });
-//Endpoint 5 Autos Id
+//Endpoint 5 encontrar un Auto por  Id
 rutas.get('/auto/:id', async (req, res) => {
     try {
         const auto = await AutoModel.findById(req.params.id);
@@ -63,6 +63,51 @@ rutas.get('/auto/:id', async (req, res) => {
         res.status(500).json({ mensaje :  error.message})
     }
 });
-
+// - obtener auto por un modelo especifico
+rutas.get('/AutoPorModelo/:modelo', async (req, res) => {
+    try {
+        const autoModelo = await AutoModel.find({ modelo: req.params.modelo});
+        return res.json(autoModelo);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// - eliminar todas las recetas
+rutas.delete('/eliminarTodos', async (req, res) => {
+    try {
+        await AutoModel.deleteMany({ });
+        return res.json({mensaje: "Todos los autos han sido eliminados"});
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// - contar el numero total de sutos
+rutas.get('/totalAutos', async (req, res) => {
+    try {
+        const total = await AutoModel.countDocuments();
+        return res.json({totalautos: total });
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// - obtener la lista de autos  ordenadas por nombre ascendente o descendente
+// query.sort({ field: 'asc', test: -1 });
+rutas.get('/ordenarAutos', async (req, res) => {
+    try {
+       const autosOrdenados = await AutoModel.find().sort({ nombre: 1});
+       res.status(200).json(autosOrdenados);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
+// - obtener Auto por cantidad
+rutas.get('/autoPorCantidad/:cantidad', async (req, res) => {
+    try {
+       const autos = await AutoModel.find({ precio : req.params.cantidad});
+       res.status(200).json(autos);
+    } catch(error) {
+        res.status(500).json({ mensaje :  error.message})
+    }
+});
 
 module.exports = rutas;
