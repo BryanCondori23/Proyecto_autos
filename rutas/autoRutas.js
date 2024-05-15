@@ -121,7 +121,7 @@ rutas.get('/buscarAutosPorLetra/:letra', async (req, res) => {
         res.status(500).json({ mensaje :  error.message})
     }
 });
-// buscar autos con precio mayor al indicado en la solicitud get
+// buscar autos con precio mayor al indicado en la solicitud 
 rutas.get('/autosPrecioMayor/:precio', async (req, res) => {
     try {
         const autosPrecioMayor = await AutoModel.find({ precio: { $gt: req.params.precio } });
@@ -159,6 +159,8 @@ rutas.get('/autosOrdenadosPorPrecio', async (req, res) => {
         res.status(500).json({ mensaje :  error.message})
     }
 });
+
+
 
 
 
