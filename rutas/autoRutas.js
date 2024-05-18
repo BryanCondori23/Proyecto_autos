@@ -1,6 +1,7 @@
 const express = require('express');
 const rutas = express.Router();
 const AutoModel = require('../models/Auto');
+const UsuarioModel = require('../models/Usuario');
 
 //endpoint 1.  traer todos los autos
 rutas.get('/getAutos', async (req, res) => {
@@ -17,6 +18,7 @@ rutas.post('/agregarautos', async (req, res) => {
         marca: req.body.marca,
         modelo: req.body.modelo,
         precio: req.body.precio
+       
     })
     try {
         const nuevoAuto = await auto.save();

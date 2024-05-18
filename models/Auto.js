@@ -4,7 +4,10 @@ const autoSchema = new mongoose.Schema({
     // nombre: { type: String, require: true}
     marca: String,
     modelo: String,
-    precio: Number
+    precio: Number,
+    usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' }
+
+    
 });
 
 const AutoModel = mongoose.model('Auto',autoSchema, 'auto');
