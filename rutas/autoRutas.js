@@ -17,7 +17,8 @@ rutas.post('/agregarautos', async (req, res) => {
     const auto = new AutoModel({
         marca: req.body.marca,
         modelo: req.body.modelo,
-        precio: req.body.precio
+        precio: req.body.precio,
+        usuario: req.body.usuario ///asignar el id del usuario
        
     })
     try {
@@ -162,7 +163,51 @@ rutas.get('/autosOrdenadosPorPrecio', async (req, res) => {
     }
 });
 
+/// reportes robustos
+//REPORTES 1
+rutas.get('/autoPorUsuario/:usuarioId', async (peticion, respuesta) =>{
+    const {usuarioId} = peticion.params;
+    console.log(usuarioId);
+    try{
+        const usuario = await UsuarioModel.findById(usuarioId);
+        if (!usuario)
+            return respuesta.status(404).json({mensaje: 'usuario no encontrado'});
+        const autos = await AutoModel.find({ usuario: usuarioId}).populate('usuario');
+        respuesta.json(autos);
 
+    } catch(error){
+        respuesta.status(500).json({ mensaje :  error.message})
+    }
+})
+
+//REPORTES 2
+//sumar porciones de recetas por Usuarios
+rutas.get('/porcionPorUsuario', async (req, res) => {
+    try {   
+        const usuarios = await UsuarioModel.find();
+        const reporte = await Promise.all(
+            usuarios.map( async ( usuario1 ) => {
+                const recetas = await RecetaModel.find({ usuario: usuario1._id});
+                const totalPorciones = recetas.reduce((sum, receta) => sum + receta.porciones, 0);
+                return {
+                    usuario: {
+                        _id: usuario1._id,
+                        nombreusuario: usuario1.nombreusuario
+                    },
+                    totalPorciones,
+                    recetas: recetas.map( r => ( {
+                        _id: r._id,
+                        nombre: r.nombre,
+                        porciones: r.porciones
+                    }))
+                }
+            } )
+        )
+        res.json(reporte);
+    } catch (error){
+        res.status(500).json({ mensaje :  error.message})
+    }
+})
 
 
 
