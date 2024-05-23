@@ -229,6 +229,7 @@ const express = require('express');
 const rutas = express.Router();
 const AutoModel = require('../models/Auto');
 const UsuarioModel = require('../models/Usuario');
+const Description = require('../models/descripcion');
 
 
 
