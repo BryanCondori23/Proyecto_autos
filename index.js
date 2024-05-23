@@ -1,5 +1,6 @@
 //importacion de libs
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const authRutas = require('./rutas/authRutas');
@@ -9,14 +10,18 @@ const app = express();
 
 // ruta
 const autoRutas = require('./rutas/autoRutas');
-
+const descripcionRutas = require('./rutas/descripcionRutas');
 
 // configuraciones de environment
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 //manejo de JSON
 app.use(express.json());
-
+const corsOptions = {
+    origin: ['https://localhost:4200','https://localhost:4200'],
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 //CONEXION CON MONGODB\
 mongoose.connect(MONGO_URI)
@@ -42,6 +47,7 @@ const autenticar = async (req, res, next)=>{
 
 app.use('/auth', authRutas);
 app.use('/autos', autenticar, autoRutas);
+app.use('/descripcion',autenticar,descripcionRutas);
 
 
 //utilizar las rutas de recetas
