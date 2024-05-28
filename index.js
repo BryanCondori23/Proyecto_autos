@@ -18,7 +18,7 @@ const MONGO_URI = process.env.MONGO_URI;
 //manejo de JSON
 app.use(express.json());
 const corsOptions = {
-    origin: ['https://localhost:4200','https://localhost:4200'],
+    origin: ['https://localhost:4200','https://localhost:4200/'],
     optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
@@ -45,10 +45,10 @@ const autenticar = async (req, res, next)=>{
     }
 };
 
-app.use('/auth', authRutas);
-app.use('/autos', autenticar, autoRutas);
-app.use('/descripcion',autenticar,descripcionRutas);
+// app.use('/auth', authRutas);
+// app.use('/autos', autenticar, autoRutas);
+// app.use('/descripcion',autenticar,descripcionRutas);
 
 
 //utilizar las rutas de recetas
-//app.use('/autos', autoRutas);
+app.use('/autos', autoRutas);

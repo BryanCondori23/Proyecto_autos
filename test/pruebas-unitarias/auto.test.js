@@ -1,12 +1,14 @@
 const express = require('express');
 const request = require('supertest');
 const autoRutas = require('../../rutas/autoRutas');
+
 const RecetaModel = require('../../models/Auto');
 const mongoose = require('mongoose');
 const AutoModel = require('../../models/Auto');
 const app = express();
 app.use(express.json());
 app.use('/autos', autoRutas);
+
 
 
 describe('Pruebas Unitarias para Recetas', () => {

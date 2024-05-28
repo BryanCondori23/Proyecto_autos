@@ -253,7 +253,7 @@ rutas.post('/agregarautos', async (req, res) => {
         color: req.body.color,
         precio: req.body.precio,
         usuario: req.body.usuario, ///asignar el id del usuario
-        descripcion: req.body.descripcion
+       // descripcion: req.body.descripcion
        
     })
     try {
